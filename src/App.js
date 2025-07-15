@@ -1,0 +1,50 @@
+import React, { useState } from 'react';
+import './App.css';
+import Navbar from './components/Navbar';
+import TextForm from './components/TextForm';
+import Alert from './components/Alert';
+//import About from './components/About';
+
+function App() {
+  const [mode, setMode] = useState('light'); // Whether dark mode is enabled or not
+  const [alert, setAlert] = useState(null);
+   
+  // show Alert function
+  const showALert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 1500);
+
+  }
+  
+  // Change it to dark else change it to light 
+  const toggleMode = () => {
+    if (mode === 'light') {
+      setMode('dark');
+      document.body.style.background = '#042743';
+      showALert("Dark mode has been enabled", "success");
+      document.title = 'TextUtils - Dark Mode';
+    } else {
+      setMode('light');
+      document.body.style.background = 'white';
+      showALert("Light mode has been enabled", "success");
+      document.title = 'TextUtils - Dark Mode';
+    }
+  }
+  return (
+    <>
+      <Navbar title="TextUtils" mode={mode} toggleMode={toggleMode} />
+      <Alert alert={alert}/>
+      <div className="container my-3">
+        <TextForm showALert={showALert} heading="Enter the text to analyze below" />
+        {/* <About/> */}
+      </div>
+    </>
+  );
+}
+
+export default App;
